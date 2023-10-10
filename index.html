@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stickies</title>
+<link rel="stylesheet" href="style.css">
+<script src="//unpkg.com/alpinejs" defer></script>
+<script src="app.js"></script>
+
+<main x-data="app">
+
+    <template x-for="(item, index) in data">
+        <textarea
+            x-model="item.txt"
+            @keydown.backspace="splice(index)"
+            @keyup.alt="color(index)" 
+            @keydown.shift="shiftPresed = true"
+            @keyup.shift="shiftPresed = false"
+            @keydown.shift.tab="if (index == 0) { $event.preventDefault(); unshift(index) }"
+            @keydown.tab="if (!shiftPresed) { push(index) }"
+            :style="`background-color: ${colors[item.color][0]}; color: ${colors[item.color][1]}`"
+        ></textarea>
+    </template>
+
+</main>
